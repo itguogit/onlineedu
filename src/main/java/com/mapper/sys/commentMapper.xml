@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mapper.sys.CommentMapper">
+
+	<sql id="columns">
+				a.id AS "id",
+				a.course_id AS "courseId",
+				a.add_user AS "addUser",
+				a.t_content AS "tContent",
+				a.add_time AS "addTime",
+				a.state AS "state"
+	</sql>
+	
+	 <!-- 查询条件 -->
+    <sql id="selectPageParmas">
+        <where>
+        	1=1
+        	<if test="id != null and id != '' ">
+            	<![CDATA[and a.id =  #{id}]]>
+            </if>
+        </where>
+    </sql>
+    
+    <select id="get" parameterType="com.model.sys.Comment" resultType="com.model.sys.Comment">
+        select 
+			<include refid="columns"/>
+        from t_comment a
+        <include refid="selectPageParmas" />
+    </select>
+    
+	<select id="getCount" parameterType="com.model.sys.Comment" resultType="Long">
+        select count(id)
+        from t_comment a
+        <include refid="selectPageParmas" />
+    </select>
+	
+	<select id="getAllList" resultType="com.model.sys.Comment" parameterType="com.model.sys.Comment" >
+	<!-- 同时生成了两个数据库的代码，可以根据自己需要删除 -->
+		<if test="dbName == 'mysql'">
+			select
+	    		<include refid="columns"/>
+	    	from t_comment a
+	    	<include refid="selectPageParmas" />
+		</if>
+		<if test="dbName == 'mssql'">
+			 SELECT
+			      <include refid="columns"/>
+			  FROM t_comment a
+			     <include refid="selectPageParmas" />
+		</if>
+	 </select>
+	 
+	<select id="getListByPage" resultType="com.model.sys.Comment" parameterType="com.model.sys.Comment" >
+	<!-- 同时生成了两个数据库的代码，可以根据自己需要删除 -->
+		<if test="dbName == 'mysql'">
+			select
+	    		<include refid="columns"/>
+	    	from t_comment a
+	    	<include refid="selectPageParmas" />
+	    	LIMIT #{start},#{limit}
+		</if>
+		<if test="dbName == 'mssql'">
+			 SELECT
+			      TOP ${limit} *
+			  FROM
+			      (
+			          SELECT
+			              ROW_NUMBER () OVER (ORDER BY id ASC) RowNumber ,<include refid="columns"/>
+			          FROM
+			             t_comment a
+			              <include refid="selectPageParmas" />
+			      ) A
+			 WHERE
+			     A.RowNumber > (#{start} - 1) * #{limit}
+		</if>
+	 </select>
+	 
+  	<insert id="insert">
+		INSERT INTO t_comment(
+					course_id,
+					add_user,
+					t_content,
+					add_time,
+					state
+		) VALUES (
+					#{courseId},
+					#{addUser},
+					#{tContent},
+					#{addTime},
+					#{state}
+		)
+	</insert>
+  
+  	<update id="update">
+		UPDATE t_comment SET 	
+						<if test="courseId != null and courseId != ''">course_id = #{courseId},</if>
+						<if test="addUser != null and addUser != ''">add_user = #{addUser},</if>
+						<if test="tContent != null and tContent != ''">t_content = #{tContent},</if>
+						<if test="addTime != null and addTime != ''">add_time = #{addTime},</if>
+						<if test="state != null and state != ''">state = #{state}</if>
+		WHERE id =  #{id}
+	</update>
+	
+	  <delete id="delete" parameterType="java.lang.Integer" >
+	    delete from t_comment
+	    where id = #{id,jdbcType=INTEGER}
+	  </delete>
+</mapper>

@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mapper.sys.UserJoinMapper">
+
+	<sql id="columns">
+				a.id AS "id",
+				a.activity_id AS "activityId",
+				a.user_id AS "userId",
+				a.state AS "state"
+	</sql>
+	
+	 <!-- 查询条件 -->
+    <sql id="selectPageParmas">
+        <where>
+        	1=1
+        	<if test="id != null and id != '' ">
+            	<![CDATA[and a.id =  #{id}]]>
+            </if>
+        </where>
+    </sql>
+    
+    <select id="get" parameterType="com.model.sys.UserJoin" resultType="com.model.sys.UserJoin">
+        select 
+			<include refid="columns"/>
+        from t_user_join a
+        <include refid="selectPageParmas" />
+    </select>
+    
+	<select id="getCount" parameterType="com.model.sys.UserJoin" resultType="Long">
+        select count(id)
+        from t_user_join a
+        <include refid="selectPageParmas" />
+    </select>
+	
+	<select id="getAllList" resultType="com.model.sys.UserJoin" parameterType="com.model.sys.UserJoin" >
+	<!-- 同时生成了两个数据库的代码，可以根据自己需要删除 -->
+		<if test="dbName == 'mysql'">
+			select
+	    		<include refid="columns"/>
+	    	from t_user_join a
+	    	<include refid="selectPageParmas" />
+		</if>
+		<if test="dbName == 'mssql'">
+			 SELECT
+			      <include refid="columns"/>
+			  FROM t_user_join a
+			     <include refid="selectPageParmas" />
+		</if>
+	 </select>
+	 
+	<select id="getListByPage" resultType="com.model.sys.UserJoin" parameterType="com.model.sys.UserJoin" >
+	<!-- 同时生成了两个数据库的代码，可以根据自己需要删除 -->
+		<if test="dbName == 'mysql'">
+			select
+	    		<include refid="columns"/>
+	    	from t_user_join a
+	    	<include refid="selectPageParmas" />
+	    	LIMIT #{start},#{limit}
+		</if>
+		<if test="dbName == 'mssql'">
+			 SELECT
+			      TOP ${limit} *
+			  FROM
+			      (
+			          SELECT
+			              ROW_NUMBER () OVER (ORDER BY id ASC) RowNumber ,<include refid="columns"/>
+			          FROM
+			             t_user_join a
+			              <include refid="selectPageParmas" />
+			      ) A
+			 WHERE
+			     A.RowNumber > (#{start} - 1) * #{limit}
+		</if>
+	 </select>
+	 
+  	<insert id="insert">
+		INSERT INTO t_user_join(
+					activity_id,
+					user_id,
+					state
+		) VALUES (
+					#{activityId},
+					#{userId},
+					#{state}
+		)
+	</insert>
+  
+  	<update id="update">
+		UPDATE t_user_join SET 	
+						<if test="activityId != null and activityId != ''">activity_id = #{activityId},</if>
+						<if test="userId != null and userId != ''">user_id = #{userId},</if>
+						<if test="state != null and state != ''">state = #{state}</if>
+		WHERE id =  #{id}
+	</update>
+	
+	  <delete id="delete" parameterType="java.lang.Integer" >
+	    delete from t_user_join
+	    where id = #{id,jdbcType=INTEGER}
+	  </delete>
+</mapper>

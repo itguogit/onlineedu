@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mapper.sys.CourseMapper">
+
+	<sql id="columns">
+				a.id AS "id",
+				a.c_name AS "cName",
+				a.c_type AS "cType",
+				a.add_user AS "addUser",
+				a.add_time AS "addTime",
+				a.c_num AS "cNum",
+				a.c_desc AS "cDesc",
+				a.c_state AS "cState",
+				a.t_url AS "tUrl"
+	</sql>
+	
+	 <!-- 查询条件 -->
+    <sql id="selectPageParmas">
+        <where>
+        	1=1
+        	<if test="id != null and id != '' ">
+            	<![CDATA[and a.id =  #{id}]]>
+            </if>
+        </where>
+    </sql>
+    
+    <select id="get" parameterType="com.model.sys.Course" resultType="com.model.sys.Course">
+        select 
+			<include refid="columns"/>
+        from t_course a
+        <include refid="selectPageParmas" />
+    </select>
+    
+	<select id="getCount" parameterType="com.model.sys.Course" resultType="Long">
+        select count(id)
+        from t_course a
+        <include refid="selectPageParmas" />
+    </select>
+	
+	<select id="getAllList" resultType="com.model.sys.Course" parameterType="com.model.sys.Course" >
+	<!-- 同时生成了两个数据库的代码，可以根据自己需要删除 -->
+		<if test="dbName == 'mysql'">
+			select
+	    		<include refid="columns"/>
+	    	from t_course a
+	    	<include refid="selectPageParmas" />
+		</if>
+		<if test="dbName == 'mssql'">
+			 SELECT
+			      <include refid="columns"/>
+			  FROM t_course a
+			     <include refid="selectPageParmas" />
+		</if>
+	 </select>
+	 
+	<select id="getListByPage" resultType="com.model.sys.Course" parameterType="com.model.sys.Course" >
+	<!-- 同时生成了两个数据库的代码，可以根据自己需要删除 -->
+		<if test="dbName == 'mysql'">
+			select
+	    		<include refid="columns"/>
+	    	from t_course a
+	    	<include refid="selectPageParmas" />
+	    	LIMIT #{start},#{limit}
+		</if>
+		<if test="dbName == 'mssql'">
+			 SELECT
+			      TOP ${limit} *
+			  FROM
+			      (
+			          SELECT
+			              ROW_NUMBER () OVER (ORDER BY id ASC) RowNumber ,<include refid="columns"/>
+			          FROM
+			             t_course a
+			              <include refid="selectPageParmas" />
+			      ) A
+			 WHERE
+			     A.RowNumber > (#{start} - 1) * #{limit}
+		</if>
+	 </select>
+	 
+  	<insert id="insert">
+		INSERT INTO t_course(
+					c_name,
+					c_type,
+					add_user,
+					add_time,
+					c_num,
+					c_desc,
+					c_state,
+					t_url
+		) VALUES (
+					#{cName},
+					#{cType},
+					#{addUser},
+					#{addTime},
+					#{cNum},
+					#{cDesc},
+					#{cState},
+					#{tUrl}
+		)
+	</insert>
+  
+  	<update id="update">
+		UPDATE t_course SET 	
+						<if test="cName != null and cName != ''">c_name = #{cName},</if>
+						<if test="cType != null and cType != ''">c_type = #{cType},</if>
+						<if test="addUser != null and addUser != ''">add_user = #{addUser},</if>
+						<if test="addTime != null and addTime != ''">add_time = #{addTime},</if>
+						<if test="cNum != null and cNum != ''">c_num = #{cNum},</if>
+						<if test="cDesc != null and cDesc != ''">c_desc = #{cDesc},</if>
+						<if test="cState != null and cState != ''">c_state = #{cState},</if>
+						<if test="tUrl != null and tUrl != ''">t_url = #{tUrl}</if>
+		WHERE id =  #{id}
+	</update>
+	
+	  <delete id="delete" parameterType="java.lang.Integer" >
+	    delete from t_course
+	    where id = #{id,jdbcType=INTEGER}
+	  </delete>
+</mapper>
