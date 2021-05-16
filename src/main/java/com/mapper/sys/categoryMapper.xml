@@ -52,27 +52,16 @@
 	 
 	<select id="getListByPage" resultType="com.model.sys.Category" parameterType="com.model.sys.Category" >
 	<!-- 同时生成了两个数据库的代码，可以根据自己需要删除 -->
-		<if test="dbName == 'mysql'">
-			select
-	    		<include refid="columns"/>
-	    	from t_category a
-	    	<include refid="selectPageParmas" />
-	    	LIMIT #{start},#{limit}
-		</if>
-		<if test="dbName == 'mssql'">
-			 SELECT
-			      TOP ${limit} *
-			  FROM
-			      (
-			          SELECT
-			              ROW_NUMBER () OVER (ORDER BY id ASC) RowNumber ,<include refid="columns"/>
-			          FROM
-			             t_category a
-			              <include refid="selectPageParmas" />
-			      ) A
-			 WHERE
-			     A.RowNumber > (#{start} - 1) * #{limit}
-		</if>
+		select
+			a.id AS "id",
+			a.t_name AS "tName",
+			a.add_user AS "addUser",
+			a.add_time AS "addTime",
+			a.state AS "state",
+		    sys_user.name  as addUserName
+		from t_category a left join sys_user on a.add_user = sys_user.id
+		<include refid="selectPageParmas" />
+		LIMIT #{start},#{limit}
 	 </select>
 	 
   	<insert id="insert">

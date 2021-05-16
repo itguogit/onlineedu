@@ -4,7 +4,7 @@
 <html>
 <head>
 	<meta charset="utf-8">
-	<title>OneManage后台管理模板 </title>
+	<title>易学系统</title>
 	<meta name="renderer" content="webkit">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -16,41 +16,35 @@
 </head>
 <body class="childrenBody">
 <fieldset class="layui-elem-field layui-field-title site-title">
-   <legend><a name="methodRender">编辑类别表</a></legend>
+   <legend><a name="methodRender">分类信息</a></legend>
  </fieldset>
  
 <form class="layui-form linksAdd">
 	<input type="hidden" name="id" value="${category.id }">
 		<div class="layui-form-item">
-			<label class="layui-form-label">主键</label>
+			<label class="layui-form-label">课程类别</label>
 			<div class="layui-input-block">
-				<input type="text" name="id" value="${category.id }" class="layui-input" lay-verify="required" placeholder="请输入主键" />
+				<input type="text" name="tName" value="${category.tName }" class="layui-input" lay-verify="required" placeholder="请输入课程类别" />
 			</div>
 		</div>
-		<div class="layui-form-item">
-			<label class="layui-form-label">种类名称</label>
-			<div class="layui-input-block">
-				<input type="text" name="tName" value="${category.tName }" class="layui-input" lay-verify="required" placeholder="请输入种类名称" />
-			</div>
-		</div>
-		<div class="layui-form-item">
-			<label class="layui-form-label">添加人主键</label>
-			<div class="layui-input-block">
-				<input type="text" name="addUser" value="${category.addUser }" class="layui-input" lay-verify="required" placeholder="请输入添加人主键" />
-			</div>
-		</div>
-		<div class="layui-form-item">
-			<label class="layui-form-label">添加时间</label>
-			<div class="layui-input-block">
-				<input type="text" name="addTime" value="${category.addTime }" class="layui-input" lay-verify="required" placeholder="请输入添加时间" />
-			</div>
-		</div>
-		<div class="layui-form-item">
-			<label class="layui-form-label">状态 1 正常  2 删除</label>
-			<div class="layui-input-block">
-				<input type="text" name="state" value="${category.state }" class="layui-input" lay-verify="required" placeholder="请输入状态 1 正常  2 删除" />
-			</div>
-		</div>
+<%--		<div class="layui-form-item">--%>
+<%--			<label class="layui-form-label">添加人主键</label>--%>
+<%--			<div class="layui-input-block">--%>
+<%--				<input type="text" name="addUser" value="${category.addUser }" class="layui-input" lay-verify="required" placeholder="请输入添加人主键" />--%>
+<%--			</div>--%>
+<%--		</div>--%>
+<%--		<div class="layui-form-item">--%>
+<%--			<label class="layui-form-label">添加时间</label>--%>
+<%--			<div class="layui-input-block">--%>
+<%--				<input type="text" name="addTime" value="${category.addTime }" class="layui-input" lay-verify="required" placeholder="请输入添加时间" />--%>
+<%--			</div>--%>
+<%--		</div>--%>
+<%--		<div class="layui-form-item">--%>
+<%--			<label class="layui-form-label">状态 1 正常  2 删除</label>--%>
+<%--			<div class="layui-input-block">--%>
+<%--				<input type="text" name="state" value="${category.state }" class="layui-input" lay-verify="required" placeholder="请输入状态 1 正常  2 删除" />--%>
+<%--			</div>--%>
+<%--		</div>--%>
 	
 	<!-- 按钮 -->
 	<div class="layui-form-item">

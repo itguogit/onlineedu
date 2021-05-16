@@ -22,11 +22,18 @@ layui.use(['form','layer','laydate','table','upload'],function(){
 					fixed : "left",
 					width : 50
 				},
-					{field : 'id',title : '主键',align : 'center',sort : true,width : '200'},
-					{field : 'tName',title : '种类名称',align : 'center',sort : true,width : '200'},
-					{field : 'addUser',title : '添加人主键',align : 'center',sort : true,width : '200'},
-					{field : 'addTime',title : '添加时间',align : 'center',sort : true,width : '200'},
-					{field : 'state',title : '状态 1 正常  2 删除',align : 'center',sort : true,width : '200'},
+					// {field : 'id',title : '主键',align : 'center',sort : true,width : '200'},
+					{field : 'tName',title : '类别名称',align : 'center',sort : true},
+					{field : 'addUserName',title : '添加人',align : 'center',sort : true},
+					{field : 'addTime',title : '添加时间',align : 'center',sort : true, templet: function(d){
+					    var data = new Date(d.addTime);
+					    return data;
+					}},
+			/*		{field : 'state',title : '分类状态',align : 'center',sort : true, templet: function(d){
+                        if (d.state == 1){
+                             return "正常";
+                        }
+                    }},*/
 				{
 					title : '操作',
 					width : 350,

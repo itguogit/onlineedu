@@ -19,13 +19,22 @@ public class Category extends PageDto implements java.io.Serializable{
 	private int id;//主键
 	private String tName;//种类名称
 	private int addUser;//添加人主键
+	private String addUserName; //添加人名称
 	private Date addTime;//添加时间
 	private int state;//状态 1 正常  2 删除
 	
 	//构造方法
 	public Category() {
 	}
-	
+
+	public String getAddUserName() {
+		return addUserName;
+	}
+
+	public void setAddUserName(String addUserName) {
+		this.addUserName = addUserName;
+	}
+
 	//get和set方法
 	
 	@Id @Column( name = "id"  ,nullable = false  , length = 10  )

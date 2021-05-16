@@ -1,12 +1,14 @@
 package com.controller.sys;
 
 import java.io.UnsupportedEncodingException;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.shiro.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -54,7 +56,6 @@ public class CategoryController {
 	 * 分页获取类别表
 	 * @param request
 	 * @param model
-	 * @param user
 	 * @return
 	 * @throws UnsupportedEncodingException
 	 */
@@ -103,7 +104,6 @@ public class CategoryController {
 	 * 批量删除类别表
 	 * @param request
 	 * @param model
-	 * @param user
 	 * @return
 	 * @throws UnsupportedEncodingException
 	 */
@@ -151,7 +151,6 @@ public class CategoryController {
 	 * 保存类别表
 	 * @param request
 	 * @param model
-	 * @param user
 	 * @return
 	 * @throws UnsupportedEncodingException
 	 */
@@ -161,7 +160,10 @@ public class CategoryController {
 		String result = "1";//结果标识 1：失败 0：成功
 		try
 		{
+			User user = (User) SecurityUtils.getSubject().getPrincipal();
 			//设置默认值
+			category.setAddUser(user.getId());
+			category.setAddTime(new Date());
 			categoryService.save(category);
 			result = "0";
 		} catch (Exception e) 
