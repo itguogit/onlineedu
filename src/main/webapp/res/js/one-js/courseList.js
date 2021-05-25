@@ -23,11 +23,17 @@ layui.use(['form','layer','laydate','table','upload'],function(){
 					width : 50
 				},
 					{field : 'cName',title : '课程名称',align : 'center',sort : true},
-					{field : 'cType',title : '课程类别',align : 'center',sort : true},
-					{field : 'addUser',title : '添加人员',align : 'center',sort : true},
-					{field : 'addTime',title : '添加时间',align : 'center',sort : true},
+					{field : 'categoryName',title : '课程类别',align : 'center',sort : true},
+					{field : 'addUserName',title : '添加人员',align : 'center',sort : true},
 					{field : 'cNum',title : '课程编号',align : 'center',sort : true},
 					{field : 'cDesc',title : '课程描述',align : 'center',sort : true},
+                    {field : 'tUrl',title : '视频状态',align : 'center',sort : true,  templet: function (d) {
+                       if (d.tUrl == "" || d.tUrl == null){
+                           return "未上传";
+                       } else{
+                           return "已上传";
+                       }
+                    }},
 				{
 					title : '操作',
 					width : 350,
@@ -40,14 +46,14 @@ layui.use(['form','layer','laydate','table','upload'],function(){
 
     //搜索
     $(".search_btn").on("click",function(){
-            table.reload("tables",{
-                page: {
-                    curr: 1 //重新从第 1 页开始
-                },
-                where: {
-                	type: $(".type").val()  //查询内容，代码生成后手动修改
-                }
-            })
+        table.reload("tables",{
+            page: {
+                curr: 1 //重新从第 1 页开始
+            },
+            where: {
+                cName: $("#cName").val()  //查询内容，代码生成后手动修改
+            }
+        })
     });
 
     //添加课程信息表
@@ -145,14 +151,19 @@ layui.use(['form','layer','laydate','table','upload'],function(){
         type: 'GET',
         dataType: 'json',
         success: function (data) {
-            if (data.success) {
+            console.log(data);
+            if (data.code == 0) {
+                var lodType = $("#cTypeOld").val();
                 $.each(data.data,function (key,val) {
-                    $("#cType").append("<option value='"+val.id+"'>"+val.tName+"</option>")
+                    if (lodType == val.id){
+                        $("#cType").append("<option value='"+val.id+"' selected>"+val.tName+"</option>")
+                    } else{
+                        $("#cType").append("<option value='"+val.id+"'>"+val.tName+"</option>")
+                    }
                 });
                 form.render('select');
             } else {
                 top.layer.msg('加载失败', {icon: 5});
-
             }
         },
         error: function () {

@@ -21,12 +21,7 @@
  
 <form class="layui-form linksAdd">
 	<input type="hidden" name="id" value="${course.id }">
-<%--		<div class="layui-form-item">--%>
-<%--			<label class="layui-form-label">主键</label>--%>
-<%--			<div class="layui-input-block">--%>
-<%--				<input type="text" name="id" value="${course.id }" class="layui-input" lay-verify="required" placeholder="请输入主键" />--%>
-<%--			</div>--%>
-<%--		</div>--%>
+
 		<div class="layui-form-item">
 			<label class="layui-form-label">课程名称</label>
 			<div class="layui-input-block">
@@ -36,7 +31,7 @@
 		<div class="layui-form-item">
 			<label class="layui-form-label">课程类别</label>
 			<div class="layui-input-block">
-				<input type="text" name="cTypeOld" value="${course.cType }" class="layui-input" lay-verify="required" placeholder="请输入课程类别主键" />
+				<input name="cTypeOld" value="${course.cType }" id="cTypeOld" class="layui-input" lay-verify="required" placeholder="请输入课程类别主键" type="hidden" />
 				<select name="cType" id="cType" lay-filter="cType">
 					<option value="">请选择课程类别</option>
 				</select>
@@ -53,23 +48,10 @@
 		<div class="layui-form-item">
 			<label class="layui-form-label">课程描述</label>
 			<div class="layui-input-block">
-				<textarea placeholder="请输入课程描述" class="layui-textarea" name="cDesc" value="${course.cDesc }"></textarea>
-
-<%--				<input type="text"  class="layui-input" lay-verify="required" placeholder="请输入课程描述" />--%>
+				<textarea placeholder="请输入课程描述" class="layui-textarea" name="cDesc">${course.cDesc }</textarea>
 			</div>
 		</div>
-<%--		<div class="layui-form-item">--%>
-<%--			<label class="layui-form-label">状态</label>--%>
-<%--			<div class="layui-input-block">--%>
-<%--				<input type="text" name="cState" value="${course.cState }" class="layui-input" lay-verify="required" placeholder="请输入状态  1 正常 2删除" />--%>
-<%--			</div>--%>
-<%--		</div>--%>
-		<%--		<div class="layui-form-item">--%>
-		<%--			<label class="layui-form-label">视频的访问链接</label>--%>
-		<%--			<div class="layui-input-block">--%>
-		<%--				<input type="text" name="tUrl" value="${course.tUrl }" class="layui-input" lay-verify="required" placeholder="请输入视频的访问链接" />--%>
-		<%--			</div>--%>
-		<%--		</div>--%>
+
 	
 	<!-- 按钮 -->
 	<div class="layui-form-item">

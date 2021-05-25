@@ -22,6 +22,9 @@
         	<if test="id != null and id != '' ">
             	<![CDATA[and a.id =  #{id}]]>
             </if>
+			<if test="cName != null and cName != '' ">
+				<![CDATA[and a.c_name like %#{cName}%]]>
+			</if>
         </where>
     </sql>
     
@@ -56,27 +59,21 @@
 	 
 	<select id="getListByPage" resultType="com.model.sys.Course" parameterType="com.model.sys.Course" >
 	<!-- 同时生成了两个数据库的代码，可以根据自己需要删除 -->
-		<if test="dbName == 'mysql'">
-			select
-	    		<include refid="columns"/>
-	    	from t_course a
-	    	<include refid="selectPageParmas" />
-	    	LIMIT #{start},#{limit}
-		</if>
-		<if test="dbName == 'mssql'">
-			 SELECT
-			      TOP ${limit} *
-			  FROM
-			      (
-			          SELECT
-			              ROW_NUMBER () OVER (ORDER BY id ASC) RowNumber ,<include refid="columns"/>
-			          FROM
-			             t_course a
-			              <include refid="selectPageParmas" />
-			      ) A
-			 WHERE
-			     A.RowNumber > (#{start} - 1) * #{limit}
-		</if>
+		select
+			a.id AS "id",
+			a.c_name AS "cName",
+			a.c_type AS "cType",
+			a.add_user AS "addUser",
+			a.add_time AS "addTime",
+			a.c_num AS "cNum",
+			a.c_desc AS "cDesc",
+			a.c_state AS "cState",
+			a.t_url AS "tUrl",
+		    sys_user.name as "addUserName",
+		    t_category.t_name as "categoryName"
+		from t_course a left join t_category on a.c_type = t_category.id left join sys_user on a.add_user = sys_user.id
+		<include refid="selectPageParmas" />
+		LIMIT #{start},#{limit}
 	 </select>
 	 
   	<insert id="insert">
@@ -102,20 +99,22 @@
 	</insert>
   
   	<update id="update">
-		UPDATE t_course SET 	
-						<if test="cName != null and cName != ''">c_name = #{cName},</if>
-						<if test="cType != null and cType != ''">c_type = #{cType},</if>
-						<if test="addUser != null and addUser != ''">add_user = #{addUser},</if>
-						<if test="addTime != null and addTime != ''">add_time = #{addTime},</if>
-						<if test="cNum != null and cNum != ''">c_num = #{cNum},</if>
-						<if test="cDesc != null and cDesc != ''">c_desc = #{cDesc},</if>
-						<if test="cState != null and cState != ''">c_state = #{cState},</if>
-						<if test="tUrl != null and tUrl != ''">t_url = #{tUrl}</if>
+		UPDATE t_course
+		<set>
+		    <if test="cName != null and cName != ''">c_name = #{cName},</if>
+			<if test="cType != null and cType != ''">c_type = #{cType},</if>
+			<if test="addUser != null and addUser != ''">add_user = #{addUser},</if>
+			<if test="addTime != null and addTime != ''">add_time = #{addTime},</if>
+			<if test="cNum != null and cNum != ''">c_num = #{cNum},</if>
+			<if test="cDesc != null and cDesc != ''">c_desc = #{cDesc},</if>
+			<if test="cState != null and cState != ''">c_state = #{cState},</if>
+			<if test="tUrl != null and tUrl != ''">t_url = #{tUrl}</if>
+		</set>
 		WHERE id =  #{id}
 	</update>
 	
 	  <delete id="delete" parameterType="java.lang.Integer" >
-	    delete from t_course
-	    where id = #{id,jdbcType=INTEGER}
+		delete from t_course
+		where id = #{id,jdbcType=INTEGER}
 	  </delete>
 </mapper>

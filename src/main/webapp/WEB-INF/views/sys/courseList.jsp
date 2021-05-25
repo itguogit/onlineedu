@@ -19,7 +19,7 @@
 		<form class="layui-form">
 			<div class="layui-inline">
 				<div class="layui-input-inline">
-					<input type="text" class="layui-input type" placeholder="请输入搜索的内容" />
+					<input type="text" class="layui-input type" name="cName" id="cName" placeholder="请输入课程名称" />
 				</div>
 				<a class="layui-btn search_btn" data-type="reload"><i class="layui-icon">&#xe615;</i>搜索</a>
 			</div>
@@ -32,8 +32,11 @@
 	<table class="layui-table" id="list" lay-filter="tables"></table>
 
 	<script type="text/html" id="flinkbar">
-      <a class="layui-btn layui-btn-xs" lay-event="edit"><i class="layui-icon">&#xe642;</i>编辑</a>
-      <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del"><i class="layui-icon">&#xe640;</i>删除</a>
+		<a class="layui-btn layui-btn-xs" lay-event="play"><i class="layui-icon">&#xe642;</i>播放视频</a>
+		<a class="layui-btn layui-btn-xs" lay-event="upload"><i class="layui-icon">&#xe642;</i>上传视频</a>
+
+		<a class="layui-btn layui-btn-xs" lay-event="edit"><i class="layui-icon">&#xe642;</i>编辑</a>
+        <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del"><i class="layui-icon">&#xe640;</i>删除</a>
 	</script>
 
 	<script type="text/javascript" src="${path}/res/layui/layui.js"></script>

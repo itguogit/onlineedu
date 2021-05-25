@@ -66,7 +66,7 @@ public class CategoryController {
 		Map<String, Object> map = new HashMap<String, Object>();
 		try {
 			List<Category> list = categoryService.getAllList(category);
-			map.put("code", 200);
+			map.put("code", 0);
 			map.put("msg", "");
 			map.put("data", list);
 		} catch (Exception e) {

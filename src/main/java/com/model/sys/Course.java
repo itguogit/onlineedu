@@ -21,11 +21,31 @@ public class Course extends PageDto implements java.io.Serializable{
 	private int cType;//课程类别主键
 	private int addUser;//添加人员主键
 	private Date addTime;//添加时间
-	private int cNum;//课程编号，第几集
+	private String cNum;//课程编号，第几集
 	private String cDesc;//课程描述
 	private int cState;//状态  1 正常 2删除
 	private String tUrl;//视频的访问链接
-	
+
+	private String addUserName;
+
+	private String categoryName;
+
+	public String getAddUserName() {
+		return addUserName;
+	}
+
+	public void setAddUserName(String addUserName) {
+		this.addUserName = addUserName;
+	}
+
+	public String getCategoryName() {
+		return categoryName;
+	}
+
+	public void setCategoryName(String categoryName) {
+		this.categoryName = categoryName;
+	}
+
 	//构造方法
 	public Course() {
 	}
@@ -83,11 +103,11 @@ public class Course extends PageDto implements java.io.Serializable{
 
 	
 	@Column( name = "c_num"  , length = 10  )
-	public int getcNum() {
+	public String getcNum() {
 		return  cNum;
 	}
 
-	public void setcNum(int cNum) {
+	public void setcNum(String cNum) {
 		this.cNum = cNum;
 	}
 
