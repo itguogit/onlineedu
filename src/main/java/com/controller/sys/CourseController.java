@@ -48,8 +48,31 @@ public class CourseController {
 		model.addAttribute("user", user);
 		return "views/sys/courseList";
 	}
-	
-	
+
+	/**
+	 * 分页获取课程信息表
+	 * @param request
+	 * @param model
+	 * @param user
+	 * @return
+	 * @throws UnsupportedEncodingException
+	 */
+	@ResponseBody
+	@RequestMapping(value = "/courseList")
+	public Map<String, Object> courseList(HttpServletRequest request, Model model, Course course) throws UnsupportedEncodingException {
+		Map<String, Object> map = new HashMap<String, Object>();
+		try {
+			List<Course> list = courseService.getAllList(course);
+			map.put("code", 200);
+			map.put("msg", "");
+			map.put("data", list);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return map;
+	}
+
+
 	/**
 	 * 分页获取课程信息表
 	 * @param request

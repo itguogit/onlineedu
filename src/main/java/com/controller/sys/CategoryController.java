@@ -8,6 +8,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
+import com.model.sys.Course;
 import org.apache.shiro.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -50,7 +51,29 @@ public class CategoryController {
 		model.addAttribute("user", user);
 		return "views/sys/categoryList";
 	}
-	
+
+	/**
+	 * 分页获取课程信息表
+	 * @param request
+	 * @param model
+	 * @param user
+	 * @return
+	 * @throws UnsupportedEncodingException
+	 */
+	@ResponseBody
+	@RequestMapping(value = "/categoryList")
+	public Map<String, Object> categoryList(HttpServletRequest request, Model model, Category category) throws UnsupportedEncodingException {
+		Map<String, Object> map = new HashMap<String, Object>();
+		try {
+			List<Category> list = categoryService.getAllList(category);
+			map.put("code", 200);
+			map.put("msg", "");
+			map.put("data", list);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return map;
+	}
 	
 	/**
 	 * 分页获取类别表

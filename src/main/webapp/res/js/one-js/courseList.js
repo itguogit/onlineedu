@@ -22,15 +22,12 @@ layui.use(['form','layer','laydate','table','upload'],function(){
 					fixed : "left",
 					width : 50
 				},
-					{field : 'id',title : '主键',align : 'center',sort : true,width : '200'},
-					{field : 'cName',title : '课程名称',align : 'center',sort : true,width : '200'},
-					{field : 'cType',title : '课程类别主键',align : 'center',sort : true,width : '200'},
-					{field : 'addUser',title : '添加人员主键',align : 'center',sort : true,width : '200'},
-					{field : 'addTime',title : '添加时间',align : 'center',sort : true,width : '200'},
-					{field : 'cNum',title : '课程编号，第几集',align : 'center',sort : true,width : '200'},
-					{field : 'cDesc',title : '课程描述',align : 'center',sort : true,width : '200'},
-					{field : 'cState',title : '状态  1 正常 2删除',align : 'center',sort : true,width : '200'},
-					{field : 'tUrl',title : '视频的访问链接',align : 'center',sort : true,width : '200'},
+					{field : 'cName',title : '课程名称',align : 'center',sort : true},
+					{field : 'cType',title : '课程类别',align : 'center',sort : true},
+					{field : 'addUser',title : '添加人员',align : 'center',sort : true},
+					{field : 'addTime',title : '添加时间',align : 'center',sort : true},
+					{field : 'cNum',title : '课程编号',align : 'center',sort : true},
+					{field : 'cDesc',title : '课程描述',align : 'center',sort : true},
 				{
 					title : '操作',
 					width : 350,
@@ -141,6 +138,26 @@ layui.use(['form','layer','laydate','table','upload'],function(){
 				layer.close(index);
             });
 		}
+    });
+
+    $.ajax({
+        url: '/category/categoryList.do',
+        type: 'GET',
+        dataType: 'json',
+        success: function (data) {
+            if (data.success) {
+                $.each(data.data,function (key,val) {
+                    $("#cType").append("<option value='"+val.id+"'>"+val.tName+"</option>")
+                });
+                form.render('select');
+            } else {
+                top.layer.msg('加载失败', {icon: 5});
+
+            }
+        },
+        error: function () {
+            top.layer.msg('系统错误', {icon: 5});
+        }
     });
     
     form.on("submit(addLink)",function(data){
