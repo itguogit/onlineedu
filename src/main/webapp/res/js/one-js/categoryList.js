@@ -17,11 +17,6 @@ layui.use(['form','layer','laydate','table','upload'],function(){
         limits : [10,15,20,25],
         id : "tables",
         cols : [[
-				 {
-					type : "checkbox",
-					fixed : "left",
-					width : 50
-				},
 					// {field : 'id',title : '主键',align : 'center',sort : true,width : '200'},
 					{field : 'tName',title : '类别名称',align : 'center',sort : true},
 					{field : 'addUserName',title : '添加人',align : 'center',sort : true},

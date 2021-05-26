@@ -17,23 +17,15 @@ layui.use(['form','layer','laydate','table','upload'],function(){
         limits : [10,15,20,25],
         id : "tables",
         cols : [[
-				 {
-					type : "checkbox",
-					fixed : "left",
-					width : 50
-				},
-					{field : 'id',title : '主键',align : 'center',sort : true,width : '200'},
-					{field : 'aName',title : '活动的名称',align : 'center',sort : true,width : '200'},
-					{field : 'addUser',title : '添加人主键',align : 'center',sort : true,width : '200'},
-					{field : 'addTime',title : '添加时间',align : 'center',sort : true,width : '200'},
-					{field : 'courseId',title : '课程主键',align : 'center',sort : true,width : '200'},
-					{field : 'startTime',title : '开始时间',align : 'center',sort : true,width : '200'},
-					{field : 'endTime',title : '结束时间',align : 'center',sort : true,width : '200'},
-					{field : 'carefulInfo',title : '注意事项',align : 'center',sort : true,width : '200'},
-					{field : 'state',title : '课程状态  1 正常  2 删除',align : 'center',sort : true,width : '200'},
+					{field : 'aName',title : '活动名称',align : 'center'},
+					{field : 'name',title : '添加人',align : 'center'},
+					{field : 'addTime',title : '添加时间',align : 'center',sort : true},
+					{field : 'cName',title : '课程',align : 'center'},
+					{field : 'startTime',title : '开始时间',align : 'center',sort : true},
+					{field : 'endTime',title : '结束时间',align : 'center',sort : true},
+					{field : 'carefulInfo',title : '注意事项',align : 'center'},
 				{
 					title : '操作',
-					width : 350,
 					fixed : "right",
 					align : "center",
 					templet : '#flinkbar'
@@ -52,6 +44,18 @@ layui.use(['form','layer','laydate','table','upload'],function(){
                 }
             })
     });
+
+    //日期时间选择器
+    laydate.render({
+        elem: '#startTime'
+        ,type: 'datetime'
+    });
+    //日期时间选择器
+    laydate.render({
+        elem: '#endTime'
+        ,type: 'datetime'
+    });
+
 
     //添加活动表
     function addLink(edit){
@@ -141,6 +145,31 @@ layui.use(['form','layer','laydate','table','upload'],function(){
 				layer.close(index);
             });
 		}
+    });
+
+    $.ajax({
+        url: '/course/courseList.do',
+        type: 'GET',
+        dataType: 'json',
+        success: function (data) {
+            console.log(data);
+            if (data.code == 200) {
+                var oldCourseId = $("#oldCourseId").val();
+                $.each(data.data,function (key,val) {
+                    if (oldCourseId == val.id){
+                        $("#courseId").append("<option value='"+val.id+"' selected>"+val.cName+"</option>")
+                    } else{
+                        $("#courseId").append("<option value='"+val.id+"'>"+val.cName+"</option>")
+                    }
+                });
+                form.render('select');
+            } else {
+                top.layer.msg('加载失败', {icon: 5});
+            }
+        },
+        error: function () {
+            top.layer.msg('系统错误', {icon: 5});
+        }
     });
     
     form.on("submit(addLink)",function(data){

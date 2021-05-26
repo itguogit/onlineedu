@@ -1,5 +1,6 @@
 package com.model.sys;
 
+import javax.lang.model.element.NestingKind;
 import javax.persistence.Column;
 import javax.persistence.Id;
 import com.model.page.PageDto;
@@ -25,7 +26,28 @@ public class Activity extends PageDto implements java.io.Serializable{
 	private Date endTime;//结束时间
 	private String carefulInfo;//注意事项
 	private int state;//课程状态  1 正常  2 删除
-	
+	private String startDate;
+	private String endDate;
+
+	private String cName;
+	private String name;
+
+	public String getStartDate() {
+		return startDate;
+	}
+
+	public void setStartDate(String startDate) {
+		this.startDate = startDate;
+	}
+
+	public String getEndDate() {
+		return endDate;
+	}
+
+	public void setEndDate(String endDate) {
+		this.endDate = endDate;
+	}
+
 	//构造方法
 	public Activity() {
 	}
@@ -121,5 +143,19 @@ public class Activity extends PageDto implements java.io.Serializable{
 		this.state = state;
 	}
 
-	
+	public String getcName() {
+		return cName;
+	}
+
+	public void setcName(String cName) {
+		this.cName = cName;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
 }

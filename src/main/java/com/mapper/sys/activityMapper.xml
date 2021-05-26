@@ -58,8 +58,19 @@
 	<!-- 同时生成了两个数据库的代码，可以根据自己需要删除 -->
 		<if test="dbName == 'mysql'">
 			select
-	    		<include refid="columns"/>
-	    	from t_activity a
+				a.id AS "id",
+				a.a_name AS "aName",
+				a.add_user AS "addUser",
+				a.add_time AS "addTime",
+				a.course_id AS "courseId",
+				a.start_time AS "startTime",
+				a.end_time AS "endTime",
+				a.careful_info AS "carefulInfo",
+				a.state AS "state",
+		     	t_course.c_name as "cName",
+			    sys_user.name as "name"
+	    	from t_activity a left join t_course on a.course_id = t_course.id
+	    	left join sys_user on a.add_user = sys_user.id
 	    	<include refid="selectPageParmas" />
 	    	LIMIT #{start},#{limit}
 		</if>

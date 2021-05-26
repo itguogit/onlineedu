@@ -1,12 +1,15 @@
 package com.controller.sys;
 
 import java.io.UnsupportedEncodingException;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
+import com.util.DateUtil;
+import org.apache.shiro.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -72,7 +75,6 @@ public class ActivityController {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
 
         return map;
 		
@@ -82,7 +84,6 @@ public class ActivityController {
 	 * 删除活动表
 	 * @param request
 	 * @param model
-	 * @param user
 	 * @return
 	 * @throws UnsupportedEncodingException
 	 */
@@ -103,7 +104,6 @@ public class ActivityController {
 	 * 批量删除活动表
 	 * @param request
 	 * @param model
-	 * @param user
 	 * @return
 	 * @throws UnsupportedEncodingException
 	 */
@@ -151,7 +151,6 @@ public class ActivityController {
 	 * 保存活动表
 	 * @param request
 	 * @param model
-	 * @param user
 	 * @return
 	 * @throws UnsupportedEncodingException
 	 */
@@ -159,11 +158,23 @@ public class ActivityController {
 	@RequestMapping(value = "/save", method = RequestMethod.POST)
 	public String save(HttpServletRequest request, Model model, Activity activity) throws UnsupportedEncodingException {
 		String result = "1";//结果标识 1：失败 0：成功
+		//获取当前用户
+		User user = (User) SecurityUtils.getSubject().getPrincipal();
+		//设置默认值
+		activity.setAddUser(user.getId());
 		try
 		{
+			activity.setAddTime(new Date());
+			if (activity.getStartDate() != null && activity.getStartDate() != ""){
+				activity.setStartTime(DateUtil.toDate(activity.getStartDate()));
+			}
+			if (activity.getEndDate() != null || activity.getEndDate() != ""){
+				activity.setEndTime(DateUtil.toDate(activity.getEndDate()));
+			}
 			//设置默认值
 			activityService.save(activity);
 			result = "0";
+
 		} catch (Exception e) 
 		{
 			e.printStackTrace();

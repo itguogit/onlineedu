@@ -16,66 +16,49 @@
 </head>
 <body class="childrenBody">
 <fieldset class="layui-elem-field layui-field-title site-title">
-   <legend><a name="methodRender">编辑活动表</a></legend>
+   <legend><a name="methodRender">编辑活动</a></legend>
  </fieldset>
  
 <form class="layui-form linksAdd">
 	<input type="hidden" name="id" value="${activity.id }">
+
 		<div class="layui-form-item">
-			<label class="layui-form-label">主键</label>
+			<label class="layui-form-label">活动名称</label>
 			<div class="layui-input-block">
-				<input type="text" name="id" value="${activity.id }" class="layui-input" lay-verify="required" placeholder="请输入主键" />
+				<input type="text" name="aName" value="${activity.aName }" class="layui-input" lay-verify="required" placeholder="请输入活动名称" />
 			</div>
 		</div>
-		<div class="layui-form-item">
-			<label class="layui-form-label">活动的名称</label>
-			<div class="layui-input-block">
-				<input type="text" name="aName" value="${activity.aName }" class="layui-input" lay-verify="required" placeholder="请输入活动的名称" />
-			</div>
-		</div>
-		<div class="layui-form-item">
-			<label class="layui-form-label">添加人主键</label>
-			<div class="layui-input-block">
-				<input type="text" name="addUser" value="${activity.addUser }" class="layui-input" lay-verify="required" placeholder="请输入添加人主键" />
-			</div>
-		</div>
-		<div class="layui-form-item">
-			<label class="layui-form-label">添加时间</label>
-			<div class="layui-input-block">
-				<input type="text" name="addTime" value="${activity.addTime }" class="layui-input" lay-verify="required" placeholder="请输入添加时间" />
-			</div>
-		</div>
-		<div class="layui-form-item">
-			<label class="layui-form-label">课程主键</label>
-			<div class="layui-input-block">
-				<input type="text" name="courseId" value="${activity.courseId }" class="layui-input" lay-verify="required" placeholder="请输入课程主键" />
-			</div>
-		</div>
+
 		<div class="layui-form-item">
 			<label class="layui-form-label">开始时间</label>
 			<div class="layui-input-block">
-				<input type="text" name="startTime" value="${activity.startTime }" class="layui-input" lay-verify="required" placeholder="请输入开始时间" />
+				<input type="text" name="startDate" id="startTime" value="${activity.startTime }" class="layui-input" lay-verify="required" placeholder="请输入开始时间" />
 			</div>
 		</div>
 		<div class="layui-form-item">
 			<label class="layui-form-label">结束时间</label>
 			<div class="layui-input-block">
-				<input type="text" name="endTime" value="${activity.endTime }" class="layui-input" lay-verify="required" placeholder="请输入结束时间" />
+				<input type="text" name="endDate" id="endTime" value="${activity.endTime }" class="layui-input" lay-verify="required" placeholder="请输入结束时间" />
 			</div>
 		</div>
+
+	<div class="layui-form-item">
+		<label class="layui-form-label">相关课程</label>
+		<div class="layui-input-block">
+			<input name="oldCourseId" value="${activity.courseId }" id="oldCourseId" class="layui-input" lay-verify="required" type="hidden" />
+			<select name="courseId" id="courseId" lay-filter="courseId">
+				<option value="">请选择课程类别</option>
+			</select>
+		</div>
+	</div>
+
 		<div class="layui-form-item">
-			<label class="layui-form-label">注意事项</label>
+			<label class="layui-form-label">活动描述</label>
 			<div class="layui-input-block">
-				<input type="text" name="carefulInfo" value="${activity.carefulInfo }" class="layui-input" lay-verify="required" placeholder="请输入注意事项" />
+				<textarea placeholder="活动描述" class="layui-textarea" name="carefulInfo">${activity.carefulInfo }</textarea>
 			</div>
 		</div>
-		<div class="layui-form-item">
-			<label class="layui-form-label">课程状态  1 正常  2 删除</label>
-			<div class="layui-input-block">
-				<input type="text" name="state" value="${activity.state }" class="layui-input" lay-verify="required" placeholder="请输入课程状态  1 正常  2 删除" />
-			</div>
-		</div>
-	
+
 	<!-- 按钮 -->
 	<div class="layui-form-item">
 		<button class="layui-btn layui-block" lay-filter="addLink" lay-submit>提交</button>
