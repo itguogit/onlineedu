@@ -17,11 +17,6 @@ layui.use(['form','layer','laydate','table','upload'],function(){
         limits : [10,15,20,25],
         id : "tables",
         cols : [[
-				 {
-					type : "checkbox",
-					fixed : "left",
-					width : 50
-				},
 					{field : 'cName',title : '课程名称',align : 'center',sort : true},
 					{field : 'categoryName',title : '课程类别',align : 'center',sort : true},
 					{field : 'addUserName',title : '添加人员',align : 'center',sort : true},
@@ -65,7 +60,8 @@ layui.use(['form','layer','laydate','table','upload'],function(){
             content : path + "/course/form.do"
         })
     }
-  //添加课程信息表
+
+    //添加课程信息表
     function editLink(edit){
         var index = layer.open({
             title : "修改课程信息表",
@@ -143,7 +139,55 @@ layui.use(['form','layer','laydate','table','upload'],function(){
 				
 				layer.close(index);
             });
-		}
+		}else if(layEvent === 'upload'){ //上传
+            console.log("嘿嘿");
+            var index = layer.open({
+                title : "上传",
+                type : 2,
+                area: ['540px', '550px'],
+                content : path + "/course/upload.do"
+            });
+        }else if(layEvent === 'play'){ //播放
+            console.log("嘿嘿");
+            var index = layer.open({
+                title : "上传",
+                type : 2,
+                area: ['540px', '550px'],
+                content : path + "/course/play.do"
+            });
+        }else if(layEvent === 'comment'){ //评论
+            console.log("嘿嘿");
+            var index = layer.open({
+                title : "上传",
+                type : 2,
+                area: ['540px', '550px'],
+                content : path + "/course/comment.do"
+            });
+        }else if(layEvent === 'lookComment'){ //查看评论
+            console.log("嘿嘿");
+            var index = layer.open({
+                title : "上传",
+                type : 2,
+                area: ['540px', '1000px'],
+                content : path + "/course/lookComment.do"
+            });
+        }
+    });
+
+    // 上传文件
+    upload.render({
+        elem: '#test10'
+        , url: '/upload/uploadvedio.do'
+        , accept: 'file'
+        , exts: 'mp4'
+        , multiple: true
+        , done: function (res) {
+             if(res.code == 0){
+                 $("#vedioSource").attr("src", res.url).load();
+                 top.layer.msg('上传成功', {icon: 1});
+             }
+            console.log("软件测试");
+        }
     });
 
     $.ajax({
@@ -196,6 +240,8 @@ layui.use(['form','layer','laydate','table','upload'],function(){
         	top.layer.msg('保存失败', {icon: 5});
         }
         return false;
-    })
+    });
+
+
 
 })

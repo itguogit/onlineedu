@@ -51,7 +51,7 @@
 
 					<li class="layui-nav-item">
 						<a href="javascript:;" class="beg-layou-head">
-							<img src="${path }<shiro:principal property='img'></shiro:principal>" class="layui-nav-img">
+							<img src="<shiro:principal property='img'></shiro:principal>" class="layui-nav-img">
 							<span><%-- <shiro:principal property='loginName'/> --%></span>
 						</a>
 						<dl class="layui-nav-child">

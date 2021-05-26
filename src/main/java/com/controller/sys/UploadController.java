@@ -2,6 +2,7 @@ package com.controller.sys;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
@@ -9,10 +10,13 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
+import org.aspectj.util.FileUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -34,27 +38,41 @@ public class UploadController {
 	UserService userService;
 	
 	private static Logger log = Logger.getLogger(UploadController.class);
-	
+
+
+	/**
+	 * 新增接口 上传文档
+	 *
+	 * @author 郭晓东
+	 * @Date 2021-01-01
+	 */
+	@RequestMapping("uploadvedio")
 	@ResponseBody
-	@RequestMapping(value="image", method = RequestMethod.POST)
-	public Map<String, Object> image(MultipartFile file, HttpServletRequest request){
-		
-		Map<String, Object> map = new HashMap<String, Object>();
-		try{
-			SimpleDateFormat df = new SimpleDateFormat("yyyyMMdd");//设置日期格式
-			System.out.println(df.format(new Date()));// new Date()为获取当前系统时间
-			
-			String path = request.getSession().getServletContext().getRealPath("\\upload\\image\\" );
-			log.info("文件夹路径" + path);
-			String image = UploadUtil.uploadFile(file, path);
-			map.put("code", 0);
-			map.put("image", image);
-		}catch (Exception e){
-			map.put("code", 1);
-			e.printStackTrace();
+	public Map<String, Object> addItem(MultipartFile file, HttpServletRequest request) {
+		// 文件保存路径
+		String dirname=Tool.getyyyyMMdd();
+		String path = "D:/onlineedu/upload/vedio/";
+		String filePath = path  + "/" + dirname + Tool.getRandom() +".mp4";
+		// 保存文件
+		File dest = new File(filePath);
+		try {
+			if (!dest.getParentFile().exists()) {
+				dest.getParentFile().mkdirs();
+			}
+			file.transferTo(dest);
+		} catch (IOException e) {
+			System.out.println(e);
 		}
+		// 保存信息
+		Map<String, Object> map=new HashMap<String, Object>();
+		map.put("code", "0");
+		map.put("msg", "上传成功！");
+		map.put("data", "");
 		return map;
 	}
+
+
+
 	
 	@ResponseBody
 	@RequestMapping("uploadimg")
@@ -67,29 +85,25 @@ public class UploadController {
             List<MultipartFile> fileList = multipartRequest.getFiles("file");  
             for (MultipartFile mf : fileList) { 
                 if(!mf.isEmpty()){
-                	try {  
-                        // 文件保存路径  
-                		String dirname=Tool.getyyyyMMdd();
-                		String Path = "/upload/image/"+dirname+"/";
-                        String filePath = request.getSession().getServletContext().getRealPath("/upload/image/"+dirname+"/" );
-                        File file = new File(filePath);
-                		if (!file.exists()) {
-                			file.mkdirs();
-                		}
+                	try {
+						String path = "D:/onlineedu/upload/vedio/";
                         String filenamelast=getfilenamelast(mf.getOriginalFilename()).toUpperCase();
                         if(!filenamelast.equals(".JPG")&&!filenamelast.equals(".GIF")&&!filenamelast.equals(".JPEG")&&!filenamelast.equals(".PNG")&&!filenamelast.equals(".SWF")){
                         	 map.put("code", "2");
                         	 map.put("msg", "不是图片！");
                         }else{
+							File file = new File(path);
+							if (!file.exists()) {
+								file.mkdirs();
+							}
                         	filenamelast=Tool.getyyyyMMddHHmmssSSS()+Tool.getRandom()+filenamelast;
                         	map.put("code", "1");
                         	map.put("msg", "上传成功！");
                         	// 转存文件  
-                        	filePath = filePath + "/";
                         	Map<String, String> m = new HashMap<String, String>();
-                        	m.put("src", Path+filenamelast);
+                        	m.put("src", path+filenamelast);
                         	map.put("data", m);
-                        	mf.transferTo(new File(filePath+filenamelast));  
+                        	mf.transferTo(new File(path+filenamelast));
                         }
 					} catch (Exception e) {
 						map.put("code", "0");

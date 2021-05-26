@@ -17,24 +17,17 @@ layui.use(['form','layer','laydate','table','upload'],function(){
         limits : [10,15,20,25],
         id : "tables",
         cols : [[
-				 {
-					type : "checkbox",
-					fixed : "left",
-					width : 50
-				},
-					{field : 'id',title : '主键',align : 'center',sort : true,width : '200'},
-					{field : 'courseId',title : '课程的名称',align : 'center',sort : true,width : '200'},
-					{field : 'addUser',title : '添加人的主键',align : 'center',sort : true,width : '200'},
-					{field : 'tContent',title : '评论的内容',align : 'center',sort : true,width : '200'},
-					{field : 'addTime',title : '添加时间',align : 'center',sort : true,width : '200'},
-					{field : 'state',title : '状态',align : 'center',sort : true,width : '200'},
-				{
-					title : '操作',
-					width : 350,
-					fixed : "right",
-					align : "center",
-					templet : '#flinkbar'
-				}
+					{field : 'addUser',title : '添加人',align : 'center',sort : true},
+					{field : 'tContent',title : '评论内容',align : 'center',sort : true},
+					{field : 'addTime',title : '添加时间',align : 'center',sort : true},
+                    {field : 'cName',title : '课程',align : 'center',sort : true},
+
+            // {
+				// 	title : '操作',
+				// 	fixed : "right",
+				// 	align : "center",
+				// 	templet : '#flinkbar'
+				// }
         ]]
     });
 

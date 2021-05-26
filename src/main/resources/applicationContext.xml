@@ -169,6 +169,8 @@
 		<property name="securityManager" ref="securityManager"/>
 	</bean>
 
+
+
 	<!--
     6. 配置 ShiroFilter.
     6.1 id 必须和 web.xml 文件中配置的 DelegatingFilterProxy 的 <filter-name> 一致.

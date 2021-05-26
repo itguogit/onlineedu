@@ -97,10 +97,8 @@ public class CourseController {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
 
         return map;
-		
 	}
 	
 	/**
@@ -170,6 +168,58 @@ public class CourseController {
 		course = courseService.get(course);
 		model.addAttribute("course", course);
 		return "views/sys/courseForm";
+	}
+
+	/**
+	 * 上传课程
+	 * @param request
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value = "/upload")
+	public String upload(Course course, HttpServletRequest request, Model model) {
+		course = courseService.get(course);
+		model.addAttribute("course", course);
+		return "views/sys/courseUpload";
+	}
+
+	/**
+	 * 上传课程
+	 * @param request
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value = "/play")
+	public String play(Course course, HttpServletRequest request, Model model) {
+		course = courseService.get(course);
+		model.addAttribute("course", course);
+		return "views/sys/coursePlay";
+	}
+
+	/**
+	 * 上传课程
+	 * @param request
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value = "/comment")
+	public String comment(Course course, HttpServletRequest request, Model model) {
+		course = courseService.get(course);
+		model.addAttribute("course", course);
+		return "views/sys/courseComment";
+	}
+
+	/**
+	 * 上传课程
+	 * @param request
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value = "/lookComment")
+	public String lookComment(Course course, HttpServletRequest request, Model model) {
+		course = courseService.get(course);
+		model.addAttribute("course", course);
+		return "views/sys/lookComment";
 	}
 	
 	/**

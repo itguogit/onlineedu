@@ -1,12 +1,14 @@
 package com.controller.sys;
 
 import java.io.UnsupportedEncodingException;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.shiro.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -159,6 +161,12 @@ public class CommentController {
 	@RequestMapping(value = "/save", method = RequestMethod.POST)
 	public String save(HttpServletRequest request, Model model, Comment comment) throws UnsupportedEncodingException {
 		String result = "1";//结果标识 1：失败 0：成功
+
+		//获取当前用户
+		User user = (User) SecurityUtils.getSubject().getPrincipal();
+		//设置默认值
+		comment.setAddUser(user.getName());
+		comment.setAddTime(new Date());
 		try
 		{
 			//设置默认值

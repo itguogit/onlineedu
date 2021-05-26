@@ -32,6 +32,10 @@
 	<table class="layui-table" id="list" lay-filter="tables"></table>
 
 	<script type="text/html" id="flinkbar">
+		<a class="layui-btn layui-btn-xs" lay-event="comment"><i class="layui-icon">&#xe642;</i>评论课程</a>
+		<a class="layui-btn layui-btn-xs" lay-event="lookComment"><i class="layui-icon">&#xe642;</i>查看评论</a>
+
+
 		<a class="layui-btn layui-btn-xs" lay-event="play"><i class="layui-icon">&#xe642;</i>播放视频</a>
 		<a class="layui-btn layui-btn-xs" lay-event="upload"><i class="layui-icon">&#xe642;</i>上传视频</a>
 
