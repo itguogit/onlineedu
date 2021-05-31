@@ -17,12 +17,12 @@ layui.use(['form','layer','laydate','table','upload'],function(){
         limits : [10,15,20,25],
         id : "tables",
         cols : [[
-					{field : 'aName',title : '活动名称',align : 'center'},
-					{field : 'name',title : '添加人',align : 'center'},
-					{field : 'addTime',title : '添加时间',align : 'center',sort : true},
-					{field : 'cName',title : '课程',align : 'center'},
-					{field : 'startTime',title : '开始时间',align : 'center',sort : true},
-					{field : 'carefulInfo',title : '注意事项',align : 'center'},
+					{field : 'aName',title : '活动名称',align : 'center',width : 150},
+					{field : 'name',title : '添加人',align : 'center',width : 150},
+					{field : 'addTime',title : '添加时间',align : 'center',sort : true,width : 150},
+					{field : 'cName',title : '课程',align : 'center',width : 150},
+					{field : 'startTime',title : '开始时间',align : 'center',sort : true,width : 150},
+					{field : 'carefulInfo',title : '注意事项',align : 'center',width : 300},
 				{
 					title : '操作',
 					fixed : "right",

@@ -17,12 +17,12 @@ layui.use(['form','layer','laydate','table','upload'],function(){
         limits : [10,15,20,25],
         id : "tables",
         cols : [[
-					{field : 'cName',title : '课程名称',align : 'center',sort : true},
-					{field : 'categoryName',title : '课程类别',align : 'center',sort : true},
-					{field : 'addUserName',title : '添加人员',align : 'center',sort : true},
-					{field : 'cNum',title : '课程编号',align : 'center',sort : true},
+					{field : 'cName',title : '课程名称',align : 'center',sort : true,width : 150},
+					{field : 'categoryName',title : '课程类别',align : 'center',sort : true, width : 150},
+					{field : 'addUserName',title : '添加人员',align : 'center',sort : true,width : 150},
+					{field : 'cNum',title : '课程编号',align : 'center',sort : true,width : 150},
 					{field : 'cDesc',title : '课程描述',align : 'center',sort : true},
-                    {field : 'tUrl',title : '视频状态',align : 'center',sort : true,  templet: function (d) {
+                    {field : 'tUrl',title : '视频状态',align : 'center',sort : true, width : 150, templet: function (d) {
                        if (d.tUrl == "" || d.tUrl == null){
                            return "未上传";
                        } else{
@@ -31,7 +31,6 @@ layui.use(['form','layer','laydate','table','upload'],function(){
                     }},
 				{
 					title : '操作',
-					width : 350,
 					fixed : "right",
 					align : "center",
 					templet : '#flinkbar'
