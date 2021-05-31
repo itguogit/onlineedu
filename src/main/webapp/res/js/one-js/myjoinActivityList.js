@@ -6,10 +6,10 @@ layui.use(['form','layer','laydate','table','upload'],function(){
         upload = layui.upload,
         table = layui.table;
 
-    //课程的加入人列表
+    //活动表列表
     var tableIns = table.render({
         elem: '#list',
-        url : path + '/userJoin/userJoinData.do',
+        url : path + '/activity/myActivityData.do',
         page : true,
         cellMinWidth : 95,
         height : "full-104",
@@ -17,24 +17,16 @@ layui.use(['form','layer','laydate','table','upload'],function(){
         limits : [10,15,20,25],
         id : "tables",
         cols : [[
-				//  {
-				// 	type : "checkbox",
-				// 	fixed : "left",
-				// 	width : 50
-				// },
-					// {field : 'id',title : '主键',align : 'center',sort : true,width : '200'},
-					// {field : 'activityId',title : '活动的主键',align : 'center',sort : true,width : '200'},
-					// {field : 'userId',title : '用户的主键',align : 'center',sort : true,width : '200'},
-            {field : 'aName',title : '活动名称',align : 'center',sort : true},
-            {field : 'userName',title : '参与人',align : 'center',sort : true}
-					// {field : 'state',title : '状态',align : 'center',sort : true,width : '200'},
-				// {
-				// 	title : '操作',
-				// 	width : 350,
-				// 	fixed : "right",
-				// 	align : "center",
-				// 	templet : '#flinkbar'
-				// }
+					{field : 'aName',title : '活动名称',align : 'center'},
+					{field : 'addTime',title : '添加时间',align : 'center',sort : true},
+					{field : 'startTime',title : '开始时间',align : 'center',sort : true},
+					{field : 'carefulInfo',title : '注意事项',align : 'center'},
+				{
+					title : '操作',
+					fixed : "right",
+					align : "center",
+					templet : '#flinkbar'
+				}
         ]]
     });
 
@@ -50,26 +42,38 @@ layui.use(['form','layer','laydate','table','upload'],function(){
             })
     });
 
-    //添加课程的加入人
+    //日期时间选择器
+    laydate.render({
+        elem: '#startTime'
+        ,type: 'datetime'
+    });
+    //日期时间选择器
+    laydate.render({
+        elem: '#endTime'
+        ,type: 'datetime'
+    });
+
+
+    //添加活动表
     function addLink(edit){
         var index = layer.open({
-            title : "添加课程的加入人",
+            title : "添加活动表",
             type : 2,
 			area: ['540px', '550px'],
-            content : path + "/userJoin/form.do"
+            content : path + "/activity/form.do"
         })
     }
-  //添加课程的加入人
+  //添加活动表
     function editLink(edit){
         var index = layer.open({
-            title : "修改课程的加入人",
+            title : "修改活动表",
             type : 2,
 			area: ['540px', '550px'],
-            content : path + "/userJoin/edit.do?id="+edit.id
+            content : path + "/activity/edit.do?id="+edit.id
         })
     }
 
-    //绑定编辑课程的加入人事件
+    //绑定编辑活动表事件
     $(".addLink_btn").click(function(){
         addLink();
     })
@@ -83,10 +87,10 @@ layui.use(['form','layer','laydate','table','upload'],function(){
             for (var i in data) {
                 linkId.push(data[i].id);
             }
-            layer.confirm('确定删除选中的课程的加入人？', {icon: 3, title: '提示信息'}, function (index) {
+            layer.confirm('确定删除选中的活动表？', {icon: 3, title: '提示信息'}, function (index) {
             	var ajaxReturnData;
                 $.ajax({
-		            url: path + '/userJoin/deleteBatch.do',
+		            url: path + '/activity/deleteBatch.do',
 		            type: 'post',
 		            async: false,
 		            data: {ids:linkId.toString()},
@@ -103,7 +107,7 @@ layui.use(['form','layer','laydate','table','upload'],function(){
 		        });
             })
         }else{
-            layer.msg("请选择需要删除的课程的加入人");
+            layer.msg("请选择需要删除的活动表");
         }
     })
 
@@ -115,8 +119,8 @@ layui.use(['form','layer','laydate','table','upload'],function(){
             editLink(data);
         } else if(layEvent === 'addV'){
     		addV(data);
-        }else if(layEvent === 'del'){ //删除
-            layer.confirm('确定删除此课程的加入人？',{icon:3, title:'提示信息'},function(index){
+        } else if(layEvent === 'del'){ //删除
+            layer.confirm('确定退出此活动表？',{icon:3, title:'提示信息'},function(index){
                 var ajaxReturnData;
 		        $.ajax({
 		            url: path + '/userJoin/delete.do',
@@ -130,14 +134,68 @@ layui.use(['form','layer','laydate','table','upload'],function(){
 		        //删除结果
 		        if (ajaxReturnData == '0') {
 		            table.reload('tables');
-		            layer.msg('删除成功', {icon: 1});
+		            layer.msg('退出成功', {icon: 1});
 		        } else {
-		        	layer.msg('删除失败', {icon: 5});
+		        	layer.msg('退出失败', {icon: 5});
 		        }
 				
 				layer.close(index);
             });
-		}
+		} else if(layEvent === 'toJoin'){ //删除
+            layer.confirm('确定参加活动？',{icon:3, title:'提示信息'},function(index){
+                var ajaxReturnData;
+                $.ajax({
+                    url: path + '/activity/toJoin.do',
+                    type: 'post',
+                    async: false,
+                    data: {id:data.id},
+                    success: function (data) {
+                        ajaxReturnData = data;
+                    }
+                });
+                //删除结果
+                if (ajaxReturnData == '0') {
+                    table.reload('tables');
+                    layer.msg('参与成功', {icon: 1});
+                } else {
+                    layer.msg('已参与该活动！请在我的参与中查看', {icon: 5});
+                }
+
+                layer.close(index);
+            });
+        } else if(layEvent === 'joinUser'){ //参与人
+            var index = layer.open({
+                title : "上传",
+                type : 2,
+                area: ['540px', '550px'],
+                content : path + "/userJoin/list.do"
+            });
+        }
+    });
+
+    $.ajax({
+        url: '/course/courseList.do',
+        type: 'GET',
+        dataType: 'json',
+        success: function (data) {
+            console.log(data);
+            if (data.code == 200) {
+                var oldCourseId = $("#oldCourseId").val();
+                $.each(data.data,function (key,val) {
+                    if (oldCourseId == val.id){
+                        $("#courseId").append("<option value='"+val.id+"' selected>"+val.cName+"</option>")
+                    } else{
+                        $("#courseId").append("<option value='"+val.id+"'>"+val.cName+"</option>")
+                    }
+                });
+                form.render('select');
+            } else {
+                top.layer.msg('加载失败', {icon: 5});
+            }
+        },
+        error: function () {
+            top.layer.msg('系统错误', {icon: 5});
+        }
     });
     
     form.on("submit(addLink)",function(data){
@@ -146,7 +204,7 @@ layui.use(['form','layer','laydate','table','upload'],function(){
         var ajaxReturnData;
         //登陆验证
         $.ajax({
-            url: path + '/userJoin/save.do',
+            url: path + '/activity/save.do',
             type: 'post',
             async: false,
             data: data.field,

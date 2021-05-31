@@ -4,7 +4,7 @@
 <html>
 <head>
 	<meta charset="utf-8">
-	<title>课程的加入人--OneManage后台管理系统</title>
+	<title>我的评论</title>
 	<meta name="renderer" content="webkit">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -23,6 +23,7 @@
 				</div>
 				<a class="layui-btn search_btn" data-type="reload"><i class="layui-icon">&#xe615;</i>搜索</a>
 			</div>
+
 		</form>
 	</blockquote>
 	<table class="layui-table" id="list" lay-filter="tables"></table>
@@ -33,7 +34,7 @@
 	</script>
 
 	<script type="text/javascript" src="${path}/res/layui/layui.js"></script>
-	<script type="text/javascript" src="${path}/res/js/one-js/userJoinList.js"></script>
+	<script type="text/javascript" src="${path}/res/js/one-js/ourCommentList.js"></script>
 	<script type="text/javascript">
 		var path = "${path}";
 	</script>

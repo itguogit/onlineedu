@@ -4,7 +4,7 @@
 <html>
 <head>
 	<meta charset="utf-8">
-	<title>课程的加入人--OneManage后台管理系统</title>
+	<title>活动</title>
 	<meta name="renderer" content="webkit">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -19,7 +19,7 @@
 		<form class="layui-form">
 			<div class="layui-inline">
 				<div class="layui-input-inline">
-					<input type="text" class="layui-input type" placeholder="请输入搜索的内容" />
+					<input type="text" class="layui-input type" placeholder="请输入搜索内容" />
 				</div>
 				<a class="layui-btn search_btn" data-type="reload"><i class="layui-icon">&#xe615;</i>搜索</a>
 			</div>
@@ -28,12 +28,11 @@
 	<table class="layui-table" id="list" lay-filter="tables"></table>
 
 	<script type="text/html" id="flinkbar">
-      <a class="layui-btn layui-btn-xs" lay-event="edit"><i class="layui-icon">&#xe642;</i>编辑</a>
-      <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del"><i class="layui-icon">&#xe640;</i>删除</a>
+			<a class="layui-btn layui-btn-xs" lay-event="del"><i class="layui-icon">&#xe642;</i>删除</a>
 	</script>
 
 	<script type="text/javascript" src="${path}/res/layui/layui.js"></script>
-	<script type="text/javascript" src="${path}/res/js/one-js/userJoinList.js"></script>
+	<script type="text/javascript" src="${path}/res/js/one-js/myjoinActivityList.js"></script>
 	<script type="text/javascript">
 		var path = "${path}";
 	</script>

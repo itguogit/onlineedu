@@ -19,6 +19,12 @@
         	<if test="id != null and id != '' ">
             	<![CDATA[and a.id =  #{id}]]>
             </if>
+			<if test="addUser != null and addUser != '' ">
+				and a.add_user = #{addUser}
+			</if>
+			<if test="courseId != null and courseId != '' ">
+				and a.course_id = #{courseId}
+			</if>
         </where>
     </sql>
     
@@ -53,27 +59,11 @@
 	 
 	<select id="getListByPage" resultType="com.model.sys.Comment" parameterType="com.model.sys.Comment" >
 	<!-- 同时生成了两个数据库的代码，可以根据自己需要删除 -->
-		<if test="dbName == 'mysql'">
-			select
-	    		<include refid="columns"/>
-	    	from t_comment a
-	    	<include refid="selectPageParmas" />
-	    	LIMIT #{start},#{limit}
-		</if>
-		<if test="dbName == 'mssql'">
-			 SELECT
-			      TOP ${limit} *
-			  FROM
-			      (
-			          SELECT
-			              ROW_NUMBER () OVER (ORDER BY id ASC) RowNumber ,<include refid="columns"/>
-			          FROM
-			             t_comment a
-			              <include refid="selectPageParmas" />
-			      ) A
-			 WHERE
-			     A.RowNumber > (#{start} - 1) * #{limit}
-		</if>
+		select
+			<include refid="columns"/>, t_course.c_name as cName
+		from t_comment a left join t_course on a.course_id = t_course.id
+		<include refid="selectPageParmas" />
+		LIMIT #{start},#{limit}
 	 </select>
 	 
   	<insert id="insert">

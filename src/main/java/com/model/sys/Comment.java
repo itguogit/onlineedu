@@ -22,7 +22,16 @@ public class Comment extends PageDto implements java.io.Serializable{
 	private String tContent;//评论的内容
 	private Date addTime;//添加时间
 	private int state;//状态
-	
+	private String cName;
+
+	public String getcName() {
+		return cName;
+	}
+
+	public void setcName(String cName) {
+		this.cName = cName;
+	}
+
 	//构造方法
 	public Comment() {
 	}

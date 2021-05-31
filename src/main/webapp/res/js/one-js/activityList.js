@@ -121,7 +121,7 @@ layui.use(['form','layer','laydate','table','upload'],function(){
             editLink(data);
         } else if(layEvent === 'addV'){
     		addV(data);
-        }else if(layEvent === 'del'){ //删除
+        } else if(layEvent === 'del'){ //删除
             layer.confirm('确定删除此活动表？',{icon:3, title:'提示信息'},function(index){
                 var ajaxReturnData;
 		        $.ajax({
@@ -143,7 +143,36 @@ layui.use(['form','layer','laydate','table','upload'],function(){
 				
 				layer.close(index);
             });
-		}
+		} else if(layEvent === 'toJoin'){ //删除
+            layer.confirm('确定参加活动？',{icon:3, title:'提示信息'},function(index){
+                var ajaxReturnData;
+                $.ajax({
+                    url: path + '/activity/toJoin.do',
+                    type: 'post',
+                    async: false,
+                    data: {id:data.id},
+                    success: function (data) {
+                        ajaxReturnData = data;
+                    }
+                });
+                //删除结果
+                if (ajaxReturnData == '0') {
+                    table.reload('tables');
+                    layer.msg('参与成功', {icon: 1});
+                } else {
+                    layer.msg('已参与该活动！请在我的参与中查看', {icon: 5});
+                }
+
+                layer.close(index);
+            });
+        } else if(layEvent === 'joinUser'){ //参与人
+            var index = layer.open({
+                title : "上传",
+                type : 2,
+                area: ['540px', '550px'],
+                content : path + "/userJoin/list.do"
+            });
+        }
     });
 
     $.ajax({

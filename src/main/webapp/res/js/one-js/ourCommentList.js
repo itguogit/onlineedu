@@ -6,10 +6,10 @@ layui.use(['form','layer','laydate','table','upload'],function(){
         upload = layui.upload,
         table = layui.table;
 
-    //课程的加入人列表
+    //评论表列表
     var tableIns = table.render({
         elem: '#list',
-        url : path + '/userJoin/userJoinData.do',
+        url : path + '/comment/ourCommentData.do',
         page : true,
         cellMinWidth : 95,
         height : "full-104",
@@ -17,20 +17,13 @@ layui.use(['form','layer','laydate','table','upload'],function(){
         limits : [10,15,20,25],
         id : "tables",
         cols : [[
-				//  {
-				// 	type : "checkbox",
-				// 	fixed : "left",
-				// 	width : 50
-				// },
-					// {field : 'id',title : '主键',align : 'center',sort : true,width : '200'},
-					// {field : 'activityId',title : '活动的主键',align : 'center',sort : true,width : '200'},
-					// {field : 'userId',title : '用户的主键',align : 'center',sort : true,width : '200'},
-            {field : 'aName',title : '活动名称',align : 'center',sort : true},
-            {field : 'userName',title : '参与人',align : 'center',sort : true}
-					// {field : 'state',title : '状态',align : 'center',sort : true,width : '200'},
-				// {
+					// {field : 'addUser',title : '添加人',align : 'center',sort : true},
+					{field : 'tContent',title : '评论内容',align : 'center',sort : true},
+					{field : 'addTime',title : '添加时间',align : 'center',sort : true},
+                    {field : 'cName',title : '课程',align : 'center',sort : true},
+
+            // {
 				// 	title : '操作',
-				// 	width : 350,
 				// 	fixed : "right",
 				// 	align : "center",
 				// 	templet : '#flinkbar'
@@ -50,26 +43,26 @@ layui.use(['form','layer','laydate','table','upload'],function(){
             })
     });
 
-    //添加课程的加入人
+    //添加评论表
     function addLink(edit){
         var index = layer.open({
-            title : "添加课程的加入人",
+            title : "添加评论表",
             type : 2,
 			area: ['540px', '550px'],
-            content : path + "/userJoin/form.do"
+            content : path + "/comment/form.do"
         })
     }
-  //添加课程的加入人
+  //添加评论表
     function editLink(edit){
         var index = layer.open({
-            title : "修改课程的加入人",
+            title : "修改评论表",
             type : 2,
 			area: ['540px', '550px'],
-            content : path + "/userJoin/edit.do?id="+edit.id
+            content : path + "/comment/edit.do?id="+edit.id
         })
     }
 
-    //绑定编辑课程的加入人事件
+    //绑定编辑评论表事件
     $(".addLink_btn").click(function(){
         addLink();
     })
@@ -83,10 +76,10 @@ layui.use(['form','layer','laydate','table','upload'],function(){
             for (var i in data) {
                 linkId.push(data[i].id);
             }
-            layer.confirm('确定删除选中的课程的加入人？', {icon: 3, title: '提示信息'}, function (index) {
+            layer.confirm('确定删除选中的评论表？', {icon: 3, title: '提示信息'}, function (index) {
             	var ajaxReturnData;
                 $.ajax({
-		            url: path + '/userJoin/deleteBatch.do',
+		            url: path + '/comment/deleteBatch.do',
 		            type: 'post',
 		            async: false,
 		            data: {ids:linkId.toString()},
@@ -103,7 +96,7 @@ layui.use(['form','layer','laydate','table','upload'],function(){
 		        });
             })
         }else{
-            layer.msg("请选择需要删除的课程的加入人");
+            layer.msg("请选择需要删除的评论表");
         }
     })
 
@@ -116,10 +109,10 @@ layui.use(['form','layer','laydate','table','upload'],function(){
         } else if(layEvent === 'addV'){
     		addV(data);
         }else if(layEvent === 'del'){ //删除
-            layer.confirm('确定删除此课程的加入人？',{icon:3, title:'提示信息'},function(index){
+            layer.confirm('确定删除此评论表？',{icon:3, title:'提示信息'},function(index){
                 var ajaxReturnData;
 		        $.ajax({
-		            url: path + '/userJoin/delete.do',
+		            url: path + '/comment/delete.do',
 		            type: 'post',
 		            async: false,
 		            data: {id:data.id},
@@ -146,7 +139,7 @@ layui.use(['form','layer','laydate','table','upload'],function(){
         var ajaxReturnData;
         //登陆验证
         $.ajax({
-            url: path + '/userJoin/save.do',
+            url: path + '/comment/save.do',
             type: 'post',
             async: false,
             data: data.field,

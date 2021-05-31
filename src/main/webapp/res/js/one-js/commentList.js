@@ -28,7 +28,10 @@ layui.use(['form','layer','laydate','table','upload'],function(){
 				// 	align : "center",
 				// 	templet : '#flinkbar'
 				// }
-        ]]
+        ]],
+        where:{
+            courseId : $("#courseId").val()
+        }
     });
 
     //搜索

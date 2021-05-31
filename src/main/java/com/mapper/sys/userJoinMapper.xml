@@ -51,27 +51,12 @@
 	 
 	<select id="getListByPage" resultType="com.model.sys.UserJoin" parameterType="com.model.sys.UserJoin" >
 	<!-- 同时生成了两个数据库的代码，可以根据自己需要删除 -->
-		<if test="dbName == 'mysql'">
-			select
-	    		<include refid="columns"/>
-	    	from t_user_join a
-	    	<include refid="selectPageParmas" />
-	    	LIMIT #{start},#{limit}
-		</if>
-		<if test="dbName == 'mssql'">
-			 SELECT
-			      TOP ${limit} *
-			  FROM
-			      (
-			          SELECT
-			              ROW_NUMBER () OVER (ORDER BY id ASC) RowNumber ,<include refid="columns"/>
-			          FROM
-			             t_user_join a
-			              <include refid="selectPageParmas" />
-			      ) A
-			 WHERE
-			     A.RowNumber > (#{start} - 1) * #{limit}
-		</if>
+		select
+			<include refid="columns"/>, t_activity.a_name as aName, sys_user.name as userName
+		from t_user_join a left join t_activity on a.activity_id = t_activity.id
+		left join sys_user on a.user_id = sys_user.id
+		<include refid="selectPageParmas" />
+		LIMIT #{start},#{limit}
 	 </select>
 	 
   	<insert id="insert">

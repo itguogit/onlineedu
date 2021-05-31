@@ -16,6 +16,7 @@
 </head>
 <body class="childrenBody">
 
+<input type="hidden" class="layui-input type" placeholder="请输入搜索的内容" id="courseId"  value="${course.id }" />
 
 <blockquote class="layui-elem-quote quoteBox">
 	<form class="layui-form">

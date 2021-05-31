@@ -8,6 +8,8 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
+import com.model.sys.UserJoin;
+import com.service.sys.UserJoinService;
 import com.util.DateUtil;
 import org.apache.shiro.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,6 +39,9 @@ public class ActivityController {
 	@Autowired
 	private ActivityService activityService;
 
+	@Autowired
+	private UserJoinService userJoinService;
+
 	/**
 	 * 活动表列表跳转页面
 	 * @param request
@@ -51,8 +56,24 @@ public class ActivityController {
 		model.addAttribute("user", user);
 		return "views/sys/activityList";
 	}
-	
-	
+
+	/**
+	 * 活动表列表跳转页面
+	 * @param request
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value = "/myjoinlist")
+	public String myjoinlist(HttpServletRequest request, Model model) {
+		//获取当前用户
+		User user = (User) request.getSession().getAttribute("user");
+		user = (User) userService.get(user);
+		model.addAttribute("user", user);
+		return "views/sys/myjoinActivityList";
+	}
+
+
+
 	/**
 	 * 分页获取活动表
 	 * @param request
@@ -79,7 +100,34 @@ public class ActivityController {
         return map;
 		
 	}
-	
+
+	/**
+	 * 分页获取活动表
+	 * @param request
+	 * @param model
+	 * @param user
+	 * @return
+	 * @throws UnsupportedEncodingException
+	 */
+	@ResponseBody
+	@RequestMapping(value = "/myActivityData")
+	public Map<String, Object> myActivityData(HttpServletRequest request, Model model, Activity activity) throws UnsupportedEncodingException {
+		Map<String, Object> map = new HashMap<String, Object>();
+		try {
+			User user = (User) SecurityUtils.getSubject().getPrincipal();
+			activity.setAddUser(user.getId());
+			List<Activity> list = activityService.myActivityData(activity);
+			Long count = activityService.getCount(activity);
+			map.put("code", 0);
+			map.put("msg", "");
+			map.put("count", count);
+			map.put("data", list);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return map;
+	}
+
 	/**
 	 * 删除活动表
 	 * @param request
@@ -96,6 +144,31 @@ public class ActivityController {
 			result = "0";
 		} catch (Exception e) {
 			e.printStackTrace();
+		}
+		return result;
+	}
+
+	/**
+	 * 参与活动
+	 * @param request
+	 * @param model
+	 * @return
+	 * @throws UnsupportedEncodingException
+	 */
+	@ResponseBody
+	@RequestMapping(value = "/toJoin")
+	public String toJoin(HttpServletRequest request, Model model, Activity activity) {
+		String result = "1";
+		UserJoin userjoin = new UserJoin();
+		userjoin.setActivityId(activity.getId());
+		User user = (User) SecurityUtils.getSubject().getPrincipal();
+		userjoin.setUserId(user.getId());
+		try {
+			userJoinService.save(userjoin);
+			result = "0";
+		} catch (Exception e) {
+			result = "1";
+
 		}
 		return result;
 	}

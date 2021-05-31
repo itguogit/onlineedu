@@ -20,6 +20,10 @@ public class UserJoin extends PageDto implements java.io.Serializable{
 	private int activityId;//活动的主键
 	private int userId;//用户的主键
 	private int state;//状态
+
+	private String userName;
+
+	private String aName;
 	
 	//构造方法
 	public UserJoin() {
@@ -66,5 +70,19 @@ public class UserJoin extends PageDto implements java.io.Serializable{
 		this.state = state;
 	}
 
-	
+	public String getUserName() {
+		return userName;
+	}
+
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+
+	public String getaName() {
+		return aName;
+	}
+
+	public void setaName(String aName) {
+		this.aName = aName;
+	}
 }

@@ -89,6 +89,28 @@
 			     A.RowNumber > (#{start} - 1) * #{limit}
 		</if>
 	 </select>
+
+	<select id="myActivityData" resultType="com.model.sys.Activity" parameterType="com.model.sys.Activity" >
+		SELECT
+		t_user_join.id AS "id",
+		a.a_name AS "aName",
+		a.add_user AS "addUser",
+		a.add_time AS "addTime",
+		a.course_id AS "courseId",
+		a.start_time AS "startTime",
+		a.end_time AS "endTime",
+		a.careful_info AS "carefulInfo",
+		a.state AS "state"
+		FROM
+		`t_user_join` LEFT JOIN
+		t_activity a ON t_user_join.`activity_id` = a.`id`
+		<where>
+			1=1
+			<if test="addUser != null and addUser != '' ">
+				and t_user_join.user_id = #{addUser}
+			</if>
+		</where>
+	</select>
 	 
   	<insert id="insert">
 		INSERT INTO t_activity(
@@ -113,15 +135,17 @@
 	</insert>
   
   	<update id="update">
-		UPDATE t_activity SET 	
-						<if test="aName != null and aName != ''">a_name = #{aName},</if>
-						<if test="addUser != null and addUser != ''">add_user = #{addUser},</if>
-						<if test="addTime != null and addTime != ''">add_time = #{addTime},</if>
-						<if test="courseId != null and courseId != ''">course_id = #{courseId},</if>
-						<if test="startTime != null and startTime != ''">start_time = #{startTime},</if>
-						<if test="endTime != null and endTime != ''">end_time = #{endTime},</if>
-						<if test="carefulInfo != null and carefulInfo != ''">careful_info = #{carefulInfo},</if>
-						<if test="state != null and state != ''">state = #{state}</if>
+		UPDATE t_activity
+		<set>
+			<if test="aName != null and aName != ''">a_name = #{aName},</if>
+			<if test="addUser != null and addUser != ''">add_user = #{addUser},</if>
+			<if test="addTime != null and addTime != ''">add_time = #{addTime},</if>
+			<if test="courseId != null and courseId != ''">course_id = #{courseId},</if>
+			<if test="startTime != null and startTime != ''">start_time = #{startTime},</if>
+			<if test="endTime != null and endTime != ''">end_time = #{endTime},</if>
+			<if test="carefulInfo != null and carefulInfo != ''">careful_info = #{carefulInfo},</if>
+			<if test="state != null and state != ''">state = #{state}</if>
+		</set>
 		WHERE id =  #{id}
 	</update>
 	

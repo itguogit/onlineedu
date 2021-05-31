@@ -167,7 +167,7 @@ layui.use(['form','layer','laydate','table','upload'],function(){
             var index = layer.open({
                 title : "上传",
                 type : 2,
-                area: ['540px', '1000px'],
+                area: ['1000px', '540px'],
                 content : path + "/course/lookComment.do"
             });
         }

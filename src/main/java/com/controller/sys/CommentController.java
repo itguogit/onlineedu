@@ -50,6 +50,22 @@ public class CommentController {
 		model.addAttribute("user", user);
 		return "views/sys/commentList";
 	}
+
+
+	/**
+	 * 评论表列表跳转页面
+	 * @param request
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value = "/ourlist")
+	public String ourlist(HttpServletRequest request, Model model) {
+		//获取当前用户
+		User user = (User) request.getSession().getAttribute("user");
+		user = (User) userService.get(user);
+		model.addAttribute("user", user);
+		return "views/sys/ourCommentList";
+	}
 	
 	
 	/**
@@ -78,6 +94,34 @@ public class CommentController {
 
         return map;
 		
+	}
+
+	/**
+	 * 分页获取评论表
+	 * @param request
+	 * @param model
+	 * @param user
+	 * @return
+	 * @throws UnsupportedEncodingException
+	 */
+	@ResponseBody
+	@RequestMapping(value = "/ourCommentData")
+	public Map<String, Object> ourCommentData(HttpServletRequest request, Model model, Comment comment) throws UnsupportedEncodingException {
+		Map<String, Object> map = new HashMap<String, Object>();
+		//获取当前用户
+		User user = (User) SecurityUtils.getSubject().getPrincipal();
+		comment.setAddUser(String.valueOf(user.getId()));
+		try {
+			List<Comment> list = commentService.getListByPage(comment);
+			Long count = commentService.getCount(comment);
+			map.put("code", 0);
+			map.put("msg", "");
+			map.put("count", count);
+			map.put("data", list);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return map;
 	}
 	
 	/**
@@ -165,7 +209,7 @@ public class CommentController {
 		//获取当前用户
 		User user = (User) SecurityUtils.getSubject().getPrincipal();
 		//设置默认值
-		comment.setAddUser(user.getName());
+		comment.setAddUser(String.valueOf(user.getId()));
 		comment.setAddTime(new Date());
 		try
 		{
