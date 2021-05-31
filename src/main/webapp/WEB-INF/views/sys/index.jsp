@@ -82,18 +82,16 @@
 		<!--侧边导航栏-->
 		<div class="layui-side beg-layout-side" >
 			 <div class="layui-side-scroll">
-			 		<!-- 管理员信息      -->
-			    	<div class="user-info">
-			            <div class="photo">
-			                <img src="${path }<shiro:principal property='img'></shiro:principal>" alt="">
-			            </div>
-			            <p><shiro:principal property='loginName'/>您好！欢迎登录</p>
-			        </div>
-			 		 <ul class="layui-nav layui-nav-tree"  lay-filter="side" id="side">
-			 		 </ul>
-			 		
+				<!-- 管理员信息      -->
+				<div class="user-info">
+					<div class="photo">
+						<img src="${path }<shiro:principal property='img'></shiro:principal>" alt="">
+					</div>
+					<p><shiro:principal property='loginName'/>您好！欢迎登录</p>
+				</div>
+				 <ul class="layui-nav layui-nav-tree"  lay-filter="side" id="side">
+				 </ul>
 			 </div>
-		
 		</div>
 		<!--内容区域-->
 		<div class="layui-body beg-layout-body">

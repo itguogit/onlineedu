@@ -1,5 +1,7 @@
 <%@ page language="java" import="java.util.*" pageEncoding="utf-8"%>
+<%@ taglib prefix="shiro" uri="http://shiro.apache.org/tags" %>
 <%@ include file="/WEB-INF/inc/taglibs.jsp"%>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -32,15 +34,24 @@
 	<table class="layui-table" id="list" lay-filter="tables"></table>
 
 	<script type="text/html" id="flinkbar">
-		<a class="layui-btn layui-btn-xs" lay-event="comment"><i class="layui-icon">&#xe642;</i>评论课程</a>
-		<a class="layui-btn layui-btn-xs" lay-event="lookComment"><i class="layui-icon">&#xe642;</i>查看评论</a>
-
-
-		<a class="layui-btn layui-btn-xs" lay-event="play"><i class="layui-icon">&#xe642;</i>播放视频</a>
-		<a class="layui-btn layui-btn-xs" lay-event="upload"><i class="layui-icon">&#xe642;</i>上传视频</a>
-
-		<a class="layui-btn layui-btn-xs" lay-event="edit"><i class="layui-icon">&#xe642;</i>编辑</a>
-        <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del"><i class="layui-icon">&#xe640;</i>删除</a>
+		<shiro:hasPermission name="course:comment">
+			<a class="layui-btn layui-btn-xs" lay-event="comment"><i class="layui-icon">&#xe642;</i>评论课程</a>
+		</shiro:hasPermission>
+		<shiro:hasPermission name="course:lookComment">
+			<a class="layui-btn layui-btn-xs" lay-event="lookComment"><i class="layui-icon">&#xe642;</i>查看评论</a>
+		</shiro:hasPermission>
+		<shiro:hasPermission name="course:play">
+			<a class="layui-btn layui-btn-xs" lay-event="play"><i class="layui-icon">&#xe642;</i>播放视频</a>
+		</shiro:hasPermission>
+		<shiro:hasPermission name="course:upload">
+			<a class="layui-btn layui-btn-xs" lay-event="upload"><i class="layui-icon">&#xe642;</i>上传视频</a>
+		</shiro:hasPermission>
+		<shiro:hasPermission name="course:edit">
+			<a class="layui-btn layui-btn-xs" lay-event="edit"><i class="layui-icon">&#xe642;</i>编辑</a>
+		</shiro:hasPermission>
+		<shiro:hasPermission name="course:del">
+			<a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del"><i class="layui-icon">&#xe640;</i>删除</a>
+		</shiro:hasPermission>
 	</script>
 
 	<script type="text/javascript" src="${path}/res/layui/layui.js"></script>

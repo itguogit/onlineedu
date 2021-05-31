@@ -31,10 +31,18 @@
 	<table class="layui-table" id="list" lay-filter="tables"></table>
 
 	<script type="text/html" id="flinkbar">
-		<a class="layui-btn layui-btn-xs" lay-event="toJoin"><i class="layui-icon">&#xe642;</i>参加</a>
-		<a class="layui-btn layui-btn-xs" lay-event="joinUser"><i class="layui-icon">&#xe642;</i>参与人</a>
-		<a class="layui-btn layui-btn-xs" lay-event="edit"><i class="layui-icon">&#xe642;</i>编辑</a>
-      <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del"><i class="layui-icon">&#xe640;</i>删除</a>
+		<shiro:hasPermission name="activity:toJoin">
+			<a class="layui-btn layui-btn-xs" lay-event="toJoin"><i class="layui-icon">&#xe642;</i>参加</a>
+		</shiro:hasPermission>
+		<shiro:hasPermission name="activity:joinUser">
+			<a class="layui-btn layui-btn-xs" lay-event="joinUser"><i class="layui-icon">&#xe642;</i>参与人</a>
+		</shiro:hasPermission>
+		<shiro:hasPermission name="activity:edit">
+			<a class="layui-btn layui-btn-xs" lay-event="edit"><i class="layui-icon">&#xe642;</i>编辑</a>
+		</shiro:hasPermission>
+		<shiro:hasPermission name="activity:del">
+			<a class="layui-btn layui-btn-xs" lay-event="del"><i class="layui-icon">&#xe642;</i>删除</a>
+		</shiro:hasPermission>
 	</script>
 
 	<script type="text/javascript" src="${path}/res/layui/layui.js"></script>

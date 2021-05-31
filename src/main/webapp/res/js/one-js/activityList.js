@@ -22,7 +22,6 @@ layui.use(['form','layer','laydate','table','upload'],function(){
 					{field : 'addTime',title : '添加时间',align : 'center',sort : true},
 					{field : 'cName',title : '课程',align : 'center'},
 					{field : 'startTime',title : '开始时间',align : 'center',sort : true},
-					{field : 'endTime',title : '结束时间',align : 'center',sort : true},
 					{field : 'carefulInfo',title : '注意事项',align : 'center'},
 				{
 					title : '操作',

@@ -23,12 +23,7 @@
 				</div>
 				<a class="layui-btn search_btn" data-type="reload"><i class="layui-icon">&#xe615;</i>搜索</a>
 			</div>
-			<div class="layui-inline">
-				<a class="layui-btn layui-btn-normal addLink_btn"><i class="layui-icon">&#xe608;</i>添加评论表</a>
-			</div>
-			<div class="layui-inline">
-				<a class="layui-btn layui-btn-danger layui-btn-normal delAll_btn"><i class="layui-icon">&#xe640;</i>批量删除</a>
-			</div>
+
 		</form>
 	</blockquote>
 	<table class="layui-table" id="list" lay-filter="tables"></table>
